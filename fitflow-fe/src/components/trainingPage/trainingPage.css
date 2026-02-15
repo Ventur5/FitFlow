@@ -1,0 +1,19 @@
+.training-container {
+  padding-bottom: 50px;
+}
+
+.workout-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-radius: 12px;
+  border: none;
+}
+
+.workout-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.btn-success {
+  border-radius: 8px;
+  font-weight: 500;
+}

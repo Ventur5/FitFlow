@@ -1,0 +1,243 @@
+.container {
+  max-width: 1140px;
+}
+
+.profile-card {
+  border-radius: 15px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card .card-body {
+  font-size: 1.1rem;
+}
+
+.bmi-card {
+  border-radius: 15px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bmi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.exercise-card {
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+.exercise-card .carousel-item img {
+  border-radius: 10px;
+}
+
+.btn-logout {
+  background: #ff512f;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+}
+
+.btn-logout:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-section {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.welcome-section.fade-in {
+  opacity: 1;
+}
+
+.cta-btn {
+  font-size: 1.2rem;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  border: none;
+  color: white;
+  border-radius: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn {
+  animation: fadeIn 2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.row.mt-5 h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff512f;
+}
+
+.row.mt-5 p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.row.mt-5 h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2575fc;
+}
+
+.row.mt-5 p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.carousel-item img {
+  border-radius: 5px;
+}
+
+.exercise-card {
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.exercise-card .carousel-item img {
+  max-height: 400px;
+  object-fit: cover; 
+  border-radius: 10px;
+}
+
+.carousel-caption h5 {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.carousel-inner {
+  border-radius: 10px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #ff512f;
+}
+
+.exercise-card {
+  margin-top: 50px;
+}
+
+h3 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.profile-card, .bmi-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-card:hover, .bmi-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.row.justify-content-center {
+  display: flex;
+  justify-content: center;
+}
+
+.exercise-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.exercise-card .carousel-item img {
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.carousel-caption h5 {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+.carousel-caption p {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.carousel-inner {
+  border-radius: 10px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #ff512f;
+}
+
+.exercise-card {
+  margin-top: 50px;
+}
+
+.cta-btn {
+  background-color: #ff512f;
+  color: white;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #ff3a00;
+}
+
+.hover-shadow {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12) !important;
+}

@@ -1,0 +1,29 @@
+.add-workout-bg {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.add-workout-card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}

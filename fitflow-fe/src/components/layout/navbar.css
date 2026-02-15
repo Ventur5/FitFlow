@@ -1,0 +1,53 @@
+.navbar-custom {
+  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  padding: 0.8rem 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.brand-gradient {
+  font-weight: bold;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.brand-gradient:hover {
+  transform: scale(1.1);
+}
+
+.navbar-toggler-icon.custom-toggler {
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler:hover .custom-toggler {
+  transform: rotate(90deg);
+}
+
+.btn-logout {
+  background: #ff512f;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  border: none;
+  color: white;
+  padding: 0.45rem 1.2rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.welcome-text strong {
+  color: #ffd700;
+}
+
