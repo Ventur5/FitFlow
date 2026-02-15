@@ -5,7 +5,7 @@ import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
-function Home({ user, setUser }) {
+function Home({ user, onLogout }) {
   const [isWelcomeVisible, setIsWelcomeVisible] = useState(false);
 
   const getGreeting = () => {
@@ -22,8 +22,10 @@ function Home({ user, setUser }) {
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
-  const heightMeters = user.height / 100;
-  const bmi = (user.weight / (heightMeters * heightMeters)).toFixed(1);
+  const heightMeters = user?.height / 100;
+  const bmi = user?.weight && heightMeters 
+    ? (user.weight / (heightMeters * heightMeters)).toFixed(1) 
+    : "0.0";
 
   const getCategory = (bmiValue) => {
     if (bmiValue < 18.5) return { label: "Sottopeso", color: "text-warning" };
@@ -32,7 +34,7 @@ function Home({ user, setUser }) {
     return { label: "Obeso", color: "text-danger" };
   };
 
-  const categoryData = getCategory(bmi);
+  const categoryData = getCategory(parseFloat(bmi));
 
   useEffect(() => {
     setTimeout(() => setIsWelcomeVisible(true), 500);
@@ -63,17 +65,17 @@ function Home({ user, setUser }) {
 
   return (
     <div className="home-wrapper">
-      <Navbar user={user} onLogout={() => setUser(null)} />
+      <Navbar user={user} onLogout={onLogout} />
 
       <div
         className={`welcome-section text-center py-5 ${isWelcomeVisible ? "fade-in" : ""}`}
       >
         <h1 className="display-4 fw-bold text-primary">
-          {getGreeting()}, {user.name || "Atleta"}!
+          {getGreeting()}, {user?.name || "Atleta"}!
         </h1>
         <p className="lead text-muted px-3">
           Oggi è il giorno giusto per avvicinarti al tuo obiettivo:{" "}
-          <strong>{user.goal}</strong>.
+          <strong>{user?.goal}</strong>.
         </p>
       </div>
 
@@ -89,27 +91,27 @@ function Home({ user, setUser }) {
                   className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3"
                   style={{ width: "60px", height: "60px", fontSize: "1.5rem" }}
                 >
-                  {user.name?.[0]}
-                  {user.surname?.[0]}
+                  {user?.name?.[0]}
+                  {user?.surname?.[0]}
                 </div>
                 <Card.Title className="fw-bold mb-3">
-                  {user.name} {user.surname}
+                  {user?.name} {user?.surname}
                 </Card.Title>
                 <hr />
                 <div className="text-start">
                   <p className="mb-2">
-                    <strong>Età:</strong> {calculateAge(user.birthdate)} anni
+                    <strong>Età:</strong> {calculateAge(user?.birthdate)} anni
                   </p>
                   <p className="mb-2">
-                    <strong>Altezza:</strong> {user.height} cm
+                    <strong>Altezza:</strong> {user?.height} cm
                   </p>
                   <p className="mb-2">
-                    <strong>Peso:</strong> {user.weight} kg
+                    <strong>Peso:</strong> {user?.weight} kg
                   </p>
                   <p className="mb-0">
                     <strong>Dieta:</strong>{" "}
                     <span className="badge bg-light text-dark">
-                      {user.diet}
+                      {user?.diet}
                     </span>
                   </p>
                 </div>
@@ -138,7 +140,6 @@ function Home({ user, setUser }) {
             </Card>
           </Col>
         </Row>
-
         <Row className="mt-5">
           <Col lg={12}>
             <Card
@@ -181,10 +182,7 @@ function Home({ user, setUser }) {
                     data-bs-target="#exerciseCarousel"
                     data-bs-slide="prev"
                   >
-                    <span
-                      className="carousel-control-prev-icon"
-                      aria-hidden="true"
-                    ></span>
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                   </button>
                   <button
                     className="carousel-control-next"
@@ -192,10 +190,7 @@ function Home({ user, setUser }) {
                     data-bs-target="#exerciseCarousel"
                     data-bs-slide="next"
                   >
-                    <span
-                      className="carousel-control-next-icon"
-                      aria-hidden="true"
-                    ></span>
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
                   </button>
                 </div>
               </Card.Body>

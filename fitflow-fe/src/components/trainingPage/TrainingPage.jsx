@@ -25,21 +25,22 @@ const TrainingPage = ({ user, onLogout }) => {
         `http://localhost:5000/api/workouts/user/${user._id || user.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
-
+      
+      // DA ELIMINARE! 
       if (!res.ok) {
-        console.warn("Backend non trovato, carico dati di test");
+        console.warn("Backend non trovato o errore, carico dati di test");
         setWorkouts([
           {
-            id: 1,
+            id: "test-1",
             name: "Corsa Mattutina",
             type: "Cardio",
             duration: 30,
             difficulty: "Media",
           },
           {
-            id: 2,
+            id: "test-2",
             name: "Panca Piana",
             type: "Forza",
             duration: 45,
@@ -53,6 +54,7 @@ const TrainingPage = ({ user, onLogout }) => {
       setWorkouts(data);
     } catch (err) {
       console.error(err.message);
+      toast.error("Errore nel caricamento allenamenti");
     } finally {
       setLoading(false);
     }
@@ -90,7 +92,7 @@ const TrainingPage = ({ user, onLogout }) => {
         ) : (
           <div className="row">
             {workouts.map((workout) => (
-              <div key={workout.id} className="col-md-6 col-lg-4 mb-4">
+              <div key={workout._id || workout.id} className="col-md-6 col-lg-4 mb-4">
                 <div className="card workout-card h-100 shadow-sm">
                   <div className="card-body">
                     <h5 className="card-title text-primary">{workout.name}</h5>
@@ -106,7 +108,7 @@ const TrainingPage = ({ user, onLogout }) => {
                     <button
                       className="btn btn-outline-primary btn-sm w-100"
                       onClick={() =>
-                        navigate(`/workout/${workout.id || workout._id}`)
+                        navigate(`/workout/${workout._id || workout.id}`)
                       }
                     >
                       Vedi Dettagli
