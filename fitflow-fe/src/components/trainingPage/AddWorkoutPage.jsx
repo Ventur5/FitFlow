@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  Form, 
+  Button, 
+  InputGroup, 
+  Spinner 
+} from "react-bootstrap";
 import Navbar from "../layout/Navbar";
+import "react-toastify/dist/ReactToastify.css";
 import "./addWorkout.css";
 
 const AddWorkoutPage = ({ user, onLogout }) => {
@@ -49,106 +60,137 @@ const AddWorkoutPage = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="add-workout-bg">
+    <div className="bg-light min-vh-100">
       <Navbar user={user} onLogout={onLogout} />
-      <ToastContainer />
+      <ToastContainer position="top-right" autoClose={3000} />
 
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card add-workout-card shadow-lg border-0">
-              <div className="card-header bg-gradient-primary text-white text-center py-4">
-                <h2 className="mb-0">Nuovo Allenamento</h2>
-                <p className="small mb-0 text-white-50">
-                  Registra i tuoi progressi di oggi
-                </p>
+      <Container className="py-5">
+        <Row className="justify-content-center">
+          <Col md={8} lg={6}>
+            <Card className="border-0 shadow-sm rounded-4 overflow-hidden">
+              <div className="bg-primary py-4 text-center text-white">
+                <h2 className="fw-bold mb-0">Nuovo Allenamento</h2>
+                <p className="small opacity-75 mb-0">Definisci la tua prossima sessione</p>
               </div>
-              <div className="card-body p-4">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
-                    <label className="form-label fw-bold">Nome Esercizio</label>
-                    <input
+
+              <Card.Body className="p-4 p-md-5">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-4">
+                    <Form.Label className="fw-bold small text-uppercase text-secondary">
+                      Nome della Sessione
+                    </Form.Label>
+                    <Form.Control
                       type="text"
                       name="name"
-                      className="form-control"
-                      placeholder="es. Panca Piana, Corsa..."
+                      placeholder="es. Corsa, Yoga, Circuito HIIT..."
+                      className="form-control-lg border-0 bg-light rounded-3"
                       value={formData.name}
                       onChange={handleChange}
                       required
                     />
-                  </div>
+                  </Form.Group>
 
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label fw-bold">Tipo</label>
-                      <select
-                        name="type"
-                        className="form-select"
-                        onChange={handleChange}
-                      >
-                        <option value="Cardio">Cardio</option>
-                        <option value="Forza">Forza</option>
-                        <option value="Flessibilità">Flessibilità</option>
-                        <option value="HIIT">HIIT</option>
-                      </select>
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label fw-bold">Durata (min)</label>
-                      <input
-                        type="number"
-                        name="duration"
-                        className="form-control"
-                        placeholder="es. 30"
-                        value={formData.duration}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
+                  <Row>
+                    <Col sm={6}>
+                      <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold small text-uppercase text-secondary">
+                          Categoria
+                        </Form.Label>
+                        <Form.Select
+                          name="type"
+                          className="form-control-lg border-0 bg-light rounded-3"
+                          value={formData.type}
+                          onChange={handleChange}
+                        >
+                          <option value="Cardio">🏃 Cardio</option>
+                          <option value="Forza">🏋️ Forza</option>
+                          <option value="Flessibilità">🧘 Flessibilità</option>
+                          <option value="HIIT">⚡ HIIT</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
 
-                  <div className="mb-4">
-                    <label className="form-label fw-bold">
-                      Difficoltà percepita
-                    </label>
-                    <div className="d-flex justify-content-between bg-light p-3 rounded">
+                    <Col sm={6}>
+                      <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold small text-uppercase text-secondary">
+                          Tempo Stimato
+                        </Form.Label>
+                        <InputGroup size="lg">
+                          <Form.Control
+                            type="number"
+                            name="duration"
+                            placeholder="es. 30"
+                            className="border-0 bg-light rounded-start-3"
+                            value={formData.duration}
+                            onChange={handleChange}
+                            required
+                          />
+                          <InputGroup.Text className="border-0 bg-light text-muted small">
+                            min
+                          </InputGroup.Text>
+                        </InputGroup>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Form.Group className="mb-5">
+                    <Form.Label className="fw-bold small text-uppercase text-secondary d-block mb-3">
+                      Intensità Prevista
+                    </Form.Label>
+                    <div className="d-flex gap-3 justify-content-between bg-light p-2 rounded-3">
                       {["Bassa", "Media", "Alta"].map((level) => (
-                        <div key={level} className="form-check">
+                        <div key={level} className="flex-grow-1">
                           <input
-                            className="form-check-input"
                             type="radio"
+                            className="btn-check"
                             name="difficulty"
+                            id={`diff-${level}`}
                             value={level}
                             checked={formData.difficulty === level}
                             onChange={handleChange}
                           />
-                          <label className="form-check-label">{level}</label>
+                          <label 
+                            className={`btn btn-outline-${level === 'Alta' ? 'danger' : level === 'Media' ? 'warning' : 'success'} border-0 w-100 rounded-3 py-2`} 
+                            htmlFor={`diff-${level}`}
+                          >
+                            {level}
+                          </label>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </Form.Group>
 
-                  <div className="d-grid gap-2">
-                    <button
+                  <div className="d-grid gap-3 mt-2">
+                    <Button
+                      variant="primary"
+                      size="lg"
                       type="submit"
-                      className="btn btn-primary btn-lg"
                       disabled={loading}
+                      className="rounded-pill fw-bold py-3 shadow-sm transition-all"
                     >
-                      {loading ? "Salvataggio..." : "Salva Allenamento"}
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
+                      {loading ? (
+                        <>
+                          <Spinner animation="border" size="sm" className="me-2" />
+                          Salvataggio in corso...
+                        </>
+                      ) : (
+                        "Crea Allenamento"
+                      )}
+                    </Button>
+                    <Button
+                      variant="link"
+                      className="text-muted text-decoration-none small"
                       onClick={() => navigate("/training")}
                     >
-                      Annulla
-                    </button>
+                      Annulla e torna indietro
+                    </Button>
                   </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

@@ -1,0 +1,38 @@
+{
+  "underweight": {
+    "exercises": [
+      "Sollevamento pesi leggero 3 volte a settimana",
+      "Snack proteico dopo ogni allenamento",
+      "Camminata veloce 20 minuti al giorno"
+    ],
+    "nutrition": [
+      "Aumentare il consumo di proteine e carboidrati complessi",
+      "Mangiare frequentemente pasti leggeri ma calorici",
+      "Includere fonti di grassi sani come avocado e noci"
+    ]
+  },
+  "normal": {
+    "exercises": [
+      "Cardio 30 minuti 3 volte a settimana",
+      "Yoga o stretching 2 volte a settimana",
+      "Alimentazione bilanciata con frutta e verdura"
+    ],
+    "nutrition": [
+      "Segui una dieta equilibrata con proteine, carboidrati e grassi",
+      "Includi molta frutta e verdura",
+      "Mantieni un buon apporto di fibre e vitamine"
+    ]
+  },
+  "overweight": {
+    "exercises": [
+      "Camminata veloce o corsa leggera 30 minuti al giorno",
+      "Circuit training 3 volte a settimana",
+      "Ridurre zuccheri e grassi saturi nella dieta"
+    ],
+    "nutrition": [
+      "Limitare il consumo di zuccheri raffinati e grassi saturi",
+      "Includere più fibre nella dieta, come verdure e legumi",
+      "Bevi molta acqua e riduci l'assunzione di alcol"
+    ]
+  }
+}

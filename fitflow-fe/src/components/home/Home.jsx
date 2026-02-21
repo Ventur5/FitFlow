@@ -7,6 +7,7 @@ import "./Home.css";
 
 function Home({ user, onLogout }) {
   const [isWelcomeVisible, setIsWelcomeVisible] = useState(false);
+  const [exerciseData, setExerciseData] = useState(null);
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -23,45 +24,35 @@ function Home({ user, onLogout }) {
   };
 
   const heightMeters = user?.height / 100;
-  const bmi = user?.weight && heightMeters 
-    ? (user.weight / (heightMeters * heightMeters)).toFixed(1) 
-    : "0.0";
+  const bmi =
+    user?.weight && heightMeters
+      ? (user.weight / (heightMeters * heightMeters)).toFixed(1)
+      : "0.0";
 
   const getCategory = (bmiValue) => {
-    if (bmiValue < 18.5) return { label: "Sottopeso", color: "text-warning" };
-    if (bmiValue < 25) return { label: "Normopeso", color: "text-success" };
-    if (bmiValue < 30) return { label: "Sovrappeso", color: "text-warning" };
-    return { label: "Obeso", color: "text-danger" };
+    if (bmiValue < 18.5)
+      return { label: "Sottopeso", color: "text-warning", key: "underweight" };
+    if (bmiValue < 25)
+      return { label: "Normopeso", color: "text-success", key: "normal" };
+    if (bmiValue < 30)
+      return { label: "Sovrappeso", color: "text-warning", key: "overweight" };
+    return { label: "Obeso", color: "text-danger", key: "obese" };
   };
 
   const categoryData = getCategory(parseFloat(bmi));
 
   useEffect(() => {
     setTimeout(() => setIsWelcomeVisible(true), 500);
+
+    fetch("/exercises.json")
+      .then((res) => res.json())
+      .then((data) => setExerciseData(data))
+      .catch((err) => console.error("Errore nel caricamento dei dati:", err));
   }, []);
 
-  const exercises = [
-    {
-      name: "Camminata",
-      img: "https://www.my-personaltrainer.it/2021/05/06/camminare-al-caldo_900x760.jpeg",
-      description: "Migliora la resistenza e la salute cardiovascolare.",
-    },
-    {
-      name: "Squat",
-      img: "https://personallevelfitness.com/wp-content/uploads/2017/01/squat.jpg",
-      description: "Rafforza gambe, glutei e core.",
-    },
-    {
-      name: "Plank",
-      img: "https://www.pesoforma.com/wp-content/uploads/posizione-plank-pesoforma.png",
-      description: "Tonifica l'intero core in modo isometrico.",
-    },
-    {
-      name: "Stretching",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC_Fg8txXyMs1IwiUS4ks-jCAQaekbPzwUzA&s",
-      description: "Favorisce il recupero e la flessibilità.",
-    },
-  ];
+  const currentSuggestions = exerciseData
+    ? exerciseData[categoryData.key]
+    : null;
 
   return (
     <div className="home-wrapper">
@@ -81,9 +72,10 @@ function Home({ user, onLogout }) {
 
       <div className="container mt-2">
         <Row className="justify-content-center">
+          {/* Card Profilo */}
           <Col md={5} className="mb-4">
             <Card
-              className="h-100 border-0 shadow-sm hover-shadow"
+              className="h-100 border-0 shadow-sm"
               style={{ borderRadius: "15px" }}
             >
               <Card.Body className="p-4 text-center">
@@ -119,9 +111,10 @@ function Home({ user, onLogout }) {
             </Card>
           </Col>
 
+          {/* Card BMI */}
           <Col md={5} className="mb-4">
             <Card
-              className="h-100 border-0 shadow-sm hover-shadow"
+              className="h-100 border-0 shadow-sm"
               style={{ borderRadius: "15px" }}
             >
               <Card.Body className="p-4 text-center d-flex flex-column justify-content-center">
@@ -134,67 +127,190 @@ function Home({ user, onLogout }) {
                 </h4>
                 <p className="small text-muted mt-3">
                   L'indice di massa corporea ti aiuta a monitorare il tuo stato
-                  di salute generale.
+                  di salute.
                 </p>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+
         <Row className="mt-5">
           <Col lg={12}>
             <Card
-              className="border-0 shadow-lg overflow-hidden"
-              style={{ borderRadius: "20px" }}
+              className="border-0 shadow-lg overflow-hidden suggestion-card"
+              style={{ borderRadius: "25px" }}
             >
-              <Card.Header className="bg-white border-0 pt-4 text-center">
-                <h3 className="fw-bold">I tuoi suggerimenti del giorno</h3>
+              <Card.Header className="bg-gradient text-white py-4 text-center border-0">
+                <h3 className="fw-bold mb-1">Piano d'Azione Giornaliero</h3>
+                <p className="opacity-75 mb-0 small">
+                  Personalizzato per il tuo profilo:{" "}
+                  <strong>{categoryData.label}</strong>
+                </p>
               </Card.Header>
-              <Card.Body className="p-0">
-                <div
-                  id="exerciseCarousel"
-                  className="carousel slide"
-                  data-bs-ride="carousel"
-                >
-                  <div className="carousel-inner">
-                    {exercises.map((ex, idx) => (
-                      <div
-                        key={idx}
-                        className={`carousel-item ${idx === 0 ? "active" : ""}`}
-                      >
-                        <div className="position-relative">
-                          <img
-                            src={ex.img}
-                            className="d-block w-100"
-                            alt={ex.name}
-                            style={{ height: "400px", objectFit: "cover" }}
-                          />
-                          <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-3 p-3 mb-4 mx-5">
-                            <h4 className="fw-bold text-white">{ex.name}</h4>
-                            <p>{ex.description}</p>
-                          </div>
-                        </div>
+
+              <Card.Body className="p-4 p-md-5">
+                {currentSuggestions ? (
+                  <Row>
+                    {/* Colonna Esercizi */}
+                    <Col md={6} className="pe-md-4 mb-5 mb-md-0">
+                      <div className="section-title text-primary fw-bold mb-4">
+                        <span className="fs-3">🏋️</span> Esercizi consigliati
                       </div>
-                    ))}
+                      <div className="list-group">
+                        {currentSuggestions.exercises.map((ex, idx) => (
+                          <div
+                            key={idx}
+                            className="custom-list-item list-group-item shadow-sm border"
+                          >
+                            <div className="icon-box bg-primary bg-opacity-10 text-primary">
+                              {idx + 1}
+                            </div>
+                            <span className="fw-medium text-dark">{ex}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </Col>
+                    <Col md={6} className="ps-md-4">
+                      <div className="section-title text-success fw-bold mb-4">
+                        <span className="fs-3">🍎</span> Focus Nutrizione
+                      </div>
+                      <div className="list-group">
+                        {currentSuggestions.nutrition.map((nut, idx) => (
+                          <div
+                            key={idx}
+                            className="custom-list-item list-group-item shadow-sm border"
+                          >
+                            <div className="icon-box bg-success bg-opacity-10 text-success">
+                              ✨
+                            </div>
+                            <span className="fw-medium text-dark">{nut}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </Col>
+                  </Row>
+                ) : (
+                  <div className="text-center py-5">
+                    <div
+                      className="spinner-grow text-primary"
+                      role="status"
+                    ></div>
+                    <p className="mt-3 text-muted fw-bold">
+                      Analizzando i tuoi dati...
+                    </p>
                   </div>
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#exerciseCarousel"
-                    data-bs-slide="prev"
-                  >
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#exerciseCarousel"
-                    data-bs-slide="next"
-                  >
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                  </button>
-                </div>
+                )}
               </Card.Body>
             </Card>
+          </Col>
+        </Row>
+        {/* SEZIONE CAROSELLO */}
+        <Row className="mt-5 justify-content-center">
+          <Col lg={10}>
+            <h3 className="text-center fw-bold mb-4">Trova la tua Grinta 🔥</h3>
+            <div
+              className="carousel-wrapper shadow-lg"
+              style={{ borderRadius: "20px", overflow: "hidden" }}
+            >
+              <div
+                id="motivationalCarousel"
+                className="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div className="carousel-inner">
+                  <div className="carousel-item active" data-bs-interval="5000">
+                    <div className="position-relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop"
+                        className="d-block w-100"
+                        alt="Motivation 1"
+                        style={{
+                          height: "450px",
+                          objectFit: "cover",
+                          filter: "brightness(0.6)",
+                        }}
+                      />
+                      <div className="carousel-caption d-md-block">
+                        <h2 className="display-5 fw-bold text-uppercase">
+                          Non fermarti quando sei stanco
+                        </h2>
+                        <p className="fs-4 italic">
+                          "Fermati quando hai finito."
+                        </p> 
+                      </div>
+                    </div>
+                  </div>
+                  <div className="carousel-item" data-bs-interval="5000">
+                    <div className="position-relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop"
+                        className="d-block w-100"
+                        alt="Motivation 2"
+                        style={{
+                          height: "450px",
+                          objectFit: "cover",
+                          filter: "brightness(0.6)",
+                        }}
+                      />
+                      <div className="carousel-caption d-md-block">
+                        <h2 className="display-5 fw-bold text-uppercase">
+                          La disciplina batte il talento
+                        </h2>
+                        <p className="fs-4">
+                          "Ogni allenamento è un passo verso la tua versione
+                          migliore."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="carousel-item" data-bs-interval="5000">
+                    <div className="position-relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1470&auto=format&fit=crop"
+                        className="d-block w-100"
+                        alt="Motivation 3"
+                        style={{
+                          height: "450px",
+                          objectFit: "cover",
+                          filter: "brightness(0.6)",
+                        }}
+                      />
+                      <div className="carousel-caption d-md-block">
+                        <h2 className="display-5 fw-bold text-uppercase">
+                          Il tuo unico limite sei tu
+                        </h2>
+                        <p className="fs-4">
+                          "Inizia dove sei. Usa quello che hai. Fai quello che
+                          puoi."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#motivationalCarousel"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#motivationalCarousel"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+              </div>
+            </div>
           </Col>
         </Row>
 
