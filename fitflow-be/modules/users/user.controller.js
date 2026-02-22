@@ -2,6 +2,7 @@ const User = require("./users.schema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const exercises = require("../exercize/exercises.json");
+const trainerService = require("../trainer/trainer.service");
 
 const formatUserResponse = (user) => ({
   id: user._id,
@@ -16,7 +17,8 @@ const formatUserResponse = (user) => ({
   bmi: user.bmi,
   category: user.category,
   exercises: user.exercises || [],
-  nutrition: user.nutrition || []
+  nutrition: user.nutrition || [],
+  myTrainer: user.myTrainer || null
 });
 
 exports.register = async (req, res) => {
@@ -75,7 +77,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("myTrainer");
     if (!user) {
       return res.status(400).json({ message: "Utente non trovato" });
     }
@@ -104,7 +106,7 @@ exports.login = async (req, res) => {
 
 exports.me = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id).select("-password").populate("myTrainer");
     res.json(user);
   } catch (err) {
     console.error(err);
@@ -157,4 +159,17 @@ exports.deleteUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Errore eliminazione" });
   }
+};
+
+exports.selectTrainer = async (req, res) => {
+    try {
+        const { userId, trainerId } = req.body;
+        const updatedUser = await trainerService.chooseTrainer(userId, trainerId);
+        res.status(200).json({
+            message: "Trainer selezionato con successo!",
+            user: updatedUser
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };

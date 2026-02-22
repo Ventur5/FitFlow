@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
+import TrainerList from "../layout/TrainerList";
 import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -61,6 +62,8 @@ function Home({ user, onLogout }) {
       <div
         className={`welcome-section text-center py-5 ${isWelcomeVisible ? "fade-in" : ""}`}
       >
+        <TrainerList onLogout={onLogout} />
+
         <h1 className="display-4 fw-bold text-primary">
           {getGreeting()}, {user?.name || "Atleta"}!
         </h1>
@@ -236,7 +239,7 @@ function Home({ user, onLogout }) {
                         </h2>
                         <p className="fs-4 italic">
                           "Fermati quando hai finito."
-                        </p> 
+                        </p>
                       </div>
                     </div>
                   </div>

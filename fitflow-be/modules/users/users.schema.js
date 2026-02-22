@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   category: { type: String }, 
   exercises: { type: [String] },
   nutrition: { type: [String] },
+  myTrainer: { type: mongoose.Schema.Types.ObjectId, ref: "Trainer" }
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);
