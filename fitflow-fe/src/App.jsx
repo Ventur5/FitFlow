@@ -49,33 +49,63 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route 
-          path="/login" 
-          element={user ? <Navigate to="/" /> : <Login setUser={setUser} />} 
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" /> : <Login setUser={setUser} />}
         />
-        <Route 
-          path="/register" 
-          element={user ? <Navigate to="/" /> : <Register setUser={setUser} />} 
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/" /> : <Register setUser={setUser} />}
         />
         <Route
           path="/"
-          element={user ? <Home user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <Home user={user} onLogout={handleLogout} setUser={setUser} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/profile"
-          element={user ? <UserProfilePage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <UserProfilePage user={user} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/training"
-          element={user ? <TrainingPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <TrainingPage user={user} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/add-workout"
-          element={user ? <AddWorkoutPage user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <AddWorkoutPage user={user} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
           path="/workout/:id"
-          element={user ? <WorkoutDetail user={user} onLogout={handleLogout} /> : <Navigate to="/login" />}
+          element={
+            user ? (
+              <WorkoutDetail user={user} onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
       </Routes>
     </div>

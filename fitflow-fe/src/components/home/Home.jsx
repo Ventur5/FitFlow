@@ -6,7 +6,7 @@ import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
-function Home({ user, onLogout }) {
+function Home({ user, onLogout, setUser }) {
   const [isWelcomeVisible, setIsWelcomeVisible] = useState(false);
   const [exerciseData, setExerciseData] = useState(null);
 
@@ -62,7 +62,10 @@ function Home({ user, onLogout }) {
       <div
         className={`welcome-section text-center py-5 ${isWelcomeVisible ? "fade-in" : ""}`}
       >
-        <TrainerList onLogout={onLogout} />
+        <TrainerList
+          currentUser={user}
+          onTrainerUpdated={(updatedUser) => setUser(updatedUser)}
+        />
 
         <h1 className="display-4 fw-bold text-primary">
           {getGreeting()}, {user?.name || "Atleta"}!

@@ -55,3 +55,39 @@
     box-shadow: -10px 0 30px rgba(0,0,0,0.1) !important;
 }
 
+.custom-toast {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border: none !important;
+    border-radius: 20px !important;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+    min-width: 300px;
+}
+
+.custom-toast .toast-header {
+    background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%) !important;
+    color: white !important;
+    border: none;
+    padding: 12px 15px;
+}
+
+.custom-toast .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.custom-toast .toast-body {
+    padding: 20px;
+    color: #343a40;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@keyframes toastEntrance {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.custom-toast.show {
+    animation: toastEntrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
