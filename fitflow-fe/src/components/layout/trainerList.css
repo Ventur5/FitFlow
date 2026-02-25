@@ -1,3 +1,14 @@
+.trainer-toast-container {
+    z-index: 9999;
+    position: fixed;
+}
+
+.trainer-bio-text {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
 .trainer-fab-container {
     position: fixed;
     bottom: 30px;

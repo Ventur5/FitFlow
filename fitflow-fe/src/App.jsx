@@ -8,6 +8,19 @@ import TrainingPage from "./components/trainingPage/TrainingPage";
 import AddWorkoutPage from "./components/trainingPage/AddWorkoutPage";
 import WorkoutDetail from "./components/trainingPage/WorkoutDetail";
 
+const ProtectedRoute = ({ user, children, forceProfileUpdate = true }) => {
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (forceProfileUpdate && (user.height === 0 || user.weight === 0)) {
+   
+    if (window.location.pathname !== "/profile") {
+      return <Navigate to="/profile" replace />;
+    }
+  }
+
+  return children;
+};
+
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,6 +62,7 @@ function App() {
   return (
     <div>
       <Routes>
+        {/* ROTTE PUBBLICHE */}
         <Route
           path="/login"
           element={user ? <Navigate to="/" /> : <Login setUser={setUser} />}
@@ -57,54 +71,50 @@ function App() {
           path="/register"
           element={user ? <Navigate to="/" /> : <Register setUser={setUser} />}
         />
+
+        {/* ROTTE PROTETTE */}
         <Route
           path="/"
           element={
-            user ? (
+            <ProtectedRoute user={user}>
               <Home user={user} onLogout={handleLogout} setUser={setUser} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
           }
         />
+        
         <Route
           path="/profile"
           element={
-            user ? (
-              <UserProfilePage user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            <ProtectedRoute user={user} forceProfileUpdate={false}> 
+              <UserProfilePage user={user} onLogout={handleLogout} setUser={setUser} />
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/training"
           element={
-            user ? (
+            <ProtectedRoute user={user}>
               <TrainingPage user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/add-workout"
           element={
-            user ? (
+            <ProtectedRoute user={user}>
               <AddWorkoutPage user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/workout/:id"
           element={
-            user ? (
+            <ProtectedRoute user={user}>
               <WorkoutDetail user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            </ProtectedRoute>
           }
         />
       </Routes>

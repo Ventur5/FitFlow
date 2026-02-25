@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Workout = require("./Workout");
-const authMiddleware = require("../users/auth.middleware");
+const verifyToken = require("../../middlewares/auth/verifyToken");
 
-router.get("/user/:userId", authMiddleware, async (req, res) => {
+router.get("/user/:userId", verifyToken, async (req, res) => {
   try {
 
     const authenticatedUserId = req.user._id || req.user.id;
@@ -20,7 +20,7 @@ router.get("/user/:userId", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/add", authMiddleware, async (req, res) => {
+router.post("/add", verifyToken, async (req, res) => {
   const { name, type, duration, difficulty } = req.body;
   
   try {
@@ -42,7 +42,7 @@ router.post("/add", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/:id", authMiddleware, async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
   try {
     const workout = await Workout.findById(req.params.id);
     if (!workout) {
@@ -59,7 +59,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   const { name, type, duration, difficulty } = req.body;
   try {
     const workout = await Workout.findById(req.params.id);
@@ -82,7 +82,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.delete("/:id", authMiddleware, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const workout = await Workout.findById(req.params.id);
 

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Offcanvas, Card, Button, Spinner, Toast, ToastContainer } from "react-bootstrap";
 import { PersonBadge, XLg, StarFill } from "react-bootstrap-icons";
-import "./TrainerList.css";
+import "./trainerList.css";
 
 const TrainerList = ({ currentUser, onTrainerUpdated }) => {
   const [trainers, setTrainers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
-  
   const [showToast, setShowToast] = useState(false);
   const [selectedTrainerName, setSelectedTrainerName] = useState("");
 
@@ -45,7 +44,6 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
       if (response.ok) {
         setSelectedTrainerName(`${trainer.name} ${trainer.surname}`);
         setShowToast(true);
-        
         if (onTrainerUpdated) onTrainerUpdated(result.user || result);
         handleClose();
       }
@@ -58,8 +56,7 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
     <>
       <ToastContainer 
         position="top-end" 
-        className="p-4" 
-        style={{ zIndex: 9999, position: 'fixed' }}
+        className="p-4 trainer-toast-container"
       >
         <Toast 
           onClose={() => setShowToast(false)} 
@@ -109,7 +106,7 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
                     <small className={isMyTrainer ? "text-white-50" : "text-primary d-block mb-2"}>
                       {trainer.specialization}
                     </small>
-                    <p className="small mb-3" style={{ opacity: 0.8 }}>{trainer.bio}</p>
+                    <p className="trainer-bio-text">{trainer.bio}</p>
                     <Button
                       variant={isMyTrainer ? "light" : "primary"}
                       size="sm"

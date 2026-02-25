@@ -1,0 +1,38 @@
+.auth-card {
+  max-width: 420px;
+  border-radius: 20px !important;
+}
+
+.auth-input {
+  border-radius: 10px !important;
+}
+
+.btn-auth {
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.auth-divider-container {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.auth-divider-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 0 1rem;
+}
+
+.btn-google {
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+.google-icon {
+  width: 20px;
+  margin-right: 10px;
+}

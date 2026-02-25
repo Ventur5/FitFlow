@@ -59,9 +59,7 @@ function Home({ user, onLogout, setUser }) {
     <div className="home-wrapper">
       <Navbar user={user} onLogout={onLogout} />
 
-      <div
-        className={`welcome-section text-center py-5 ${isWelcomeVisible ? "fade-in" : ""}`}
-      >
+      <div className={`welcome-section text-center py-5 ${isWelcomeVisible ? "fade-in" : ""}`}>
         <TrainerList
           currentUser={user}
           onTrainerUpdated={(updatedUser) => setUser(updatedUser)}
@@ -80,37 +78,23 @@ function Home({ user, onLogout, setUser }) {
         <Row className="justify-content-center">
           {/* Card Profilo */}
           <Col md={5} className="mb-4">
-            <Card
-              className="h-100 border-0 shadow-sm"
-              style={{ borderRadius: "15px" }}
-            >
+            <Card className="h-100 border-0 shadow-sm home-card">
               <Card.Body className="p-4 text-center">
-                <div
-                  className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3"
-                  style={{ width: "60px", height: "60px", fontSize: "1.5rem" }}
-                >
+                <div className="user-avatar-circle mx-auto">
                   {user?.name?.[0]}
                   {user?.surname?.[0]}
                 </div>
-                <Card.Title className="fw-bold mb-3">
+                <Card.Title className="fw-bold mb-3 mt-3">
                   {user?.name} {user?.surname}
                 </Card.Title>
                 <hr />
                 <div className="text-start">
-                  <p className="mb-2">
-                    <strong>Età:</strong> {calculateAge(user?.birthdate)} anni
-                  </p>
-                  <p className="mb-2">
-                    <strong>Altezza:</strong> {user?.height} cm
-                  </p>
-                  <p className="mb-2">
-                    <strong>Peso:</strong> {user?.weight} kg
-                  </p>
+                  <p className="mb-2"><strong>Età:</strong> {calculateAge(user?.birthdate)} anni</p>
+                  <p className="mb-2"><strong>Altezza:</strong> {user?.height} cm</p>
+                  <p className="mb-2"><strong>Peso:</strong> {user?.weight} kg</p>
                   <p className="mb-0">
                     <strong>Dieta:</strong>{" "}
-                    <span className="badge bg-light text-dark">
-                      {user?.diet}
-                    </span>
+                    <span className="badge bg-light text-dark">{user?.diet}</span>
                   </p>
                 </div>
               </Card.Body>
@@ -119,21 +103,13 @@ function Home({ user, onLogout, setUser }) {
 
           {/* Card BMI */}
           <Col md={5} className="mb-4">
-            <Card
-              className="h-100 border-0 shadow-sm"
-              style={{ borderRadius: "15px" }}
-            >
+            <Card className="h-100 border-0 shadow-sm home-card">
               <Card.Body className="p-4 text-center d-flex flex-column justify-content-center">
-                <Card.Title className="fw-bold mb-4">
-                  Analisi Corporea (BMI)
-                </Card.Title>
+                <Card.Title className="fw-bold mb-4">Analisi Corporea (BMI)</Card.Title>
                 <h2 className="display-3 fw-bold text-primary mb-1">{bmi}</h2>
-                <h4 className={`fw-bold ${categoryData.color}`}>
-                  {categoryData.label}
-                </h4>
+                <h4 className={`fw-bold ${categoryData.color}`}>{categoryData.label}</h4>
                 <p className="small text-muted mt-3">
-                  L'indice di massa corporea ti aiuta a monitorare il tuo stato
-                  di salute.
+                  L'indice di massa corporea ti aiuta a monitorare il tuo stato di salute.
                 </p>
               </Card.Body>
             </Card>
@@ -142,35 +118,25 @@ function Home({ user, onLogout, setUser }) {
 
         <Row className="mt-5">
           <Col lg={12}>
-            <Card
-              className="border-0 shadow-lg overflow-hidden suggestion-card"
-              style={{ borderRadius: "25px" }}
-            >
-              <Card.Header className="bg-gradient text-white py-4 text-center border-0">
-                <h3 className="fw-bold mb-1">Piano d'Azione Giornaliero</h3>
+            <Card className="border-0 shadow-lg overflow-hidden suggestion-card">
+              <Card.Header className="suggestion-header text-white py-4 text-center border-0">
+                <h3 className="fw-bold mb-1 text-white">Piano d'Azione Giornaliero</h3>
                 <p className="opacity-75 mb-0 small">
-                  Personalizzato per il tuo profilo:{" "}
-                  <strong>{categoryData.label}</strong>
+                  Personalizzato per il tuo profilo: <strong>{categoryData.label}</strong>
                 </p>
               </Card.Header>
 
               <Card.Body className="p-4 p-md-5">
                 {currentSuggestions ? (
                   <Row>
-                    {/* Colonna Esercizi */}
                     <Col md={6} className="pe-md-4 mb-5 mb-md-0">
                       <div className="section-title text-primary fw-bold mb-4">
                         <span className="fs-3">🏋️</span> Esercizi consigliati
                       </div>
                       <div className="list-group">
                         {currentSuggestions.exercises.map((ex, idx) => (
-                          <div
-                            key={idx}
-                            className="custom-list-item list-group-item shadow-sm border"
-                          >
-                            <div className="icon-box bg-primary bg-opacity-10 text-primary">
-                              {idx + 1}
-                            </div>
+                          <div key={idx} className="custom-list-item list-group-item shadow-sm border">
+                            <div className="icon-box bg-primary bg-opacity-10">{idx + 1}</div>
                             <span className="fw-medium text-dark">{ex}</span>
                           </div>
                         ))}
@@ -182,13 +148,8 @@ function Home({ user, onLogout, setUser }) {
                       </div>
                       <div className="list-group">
                         {currentSuggestions.nutrition.map((nut, idx) => (
-                          <div
-                            key={idx}
-                            className="custom-list-item list-group-item shadow-sm border"
-                          >
-                            <div className="icon-box bg-success bg-opacity-10 text-success">
-                              ✨
-                            </div>
+                          <div key={idx} className="custom-list-item list-group-item shadow-sm border">
+                            <div className="icon-box bg-success bg-opacity-10 text-success">✨</div>
                             <span className="fw-medium text-dark">{nut}</span>
                           </div>
                         ))}
@@ -197,123 +158,43 @@ function Home({ user, onLogout, setUser }) {
                   </Row>
                 ) : (
                   <div className="text-center py-5">
-                    <div
-                      className="spinner-grow text-primary"
-                      role="status"
-                    ></div>
-                    <p className="mt-3 text-muted fw-bold">
-                      Analizzando i tuoi dati...
-                    </p>
+                    <div className="spinner-grow text-primary" role="status"></div>
+                    <p className="mt-3 text-muted fw-bold">Analizzando i tuoi dati...</p>
                   </div>
                 )}
               </Card.Body>
             </Card>
           </Col>
         </Row>
+
         {/* SEZIONE CAROSELLO */}
         <Row className="mt-5 justify-content-center">
           <Col lg={10}>
-            <h3 className="text-center fw-bold mb-4">Trova la tua Grinta 🔥</h3>
-            <div
-              className="carousel-wrapper shadow-lg"
-              style={{ borderRadius: "20px", overflow: "hidden" }}
-            >
-              <div
-                id="motivationalCarousel"
-                className="carousel slide"
-                data-bs-ride="carousel"
-              >
+            <h3 className="text-center fw-bold mb-4 section-title-main">Trova la tua Grinta 🔥</h3>
+            <div className="carousel-wrapper shadow-lg">
+              <div id="motivationalCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
-                  <div className="carousel-item active" data-bs-interval="5000">
-                    <div className="position-relative">
-                      <img
-                        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop"
-                        className="d-block w-100"
-                        alt="Motivation 1"
-                        style={{
-                          height: "450px",
-                          objectFit: "cover",
-                          filter: "brightness(0.6)",
-                        }}
-                      />
-                      <div className="carousel-caption d-md-block">
-                        <h2 className="display-5 fw-bold text-uppercase">
-                          Non fermarti quando sei stanco
-                        </h2>
-                        <p className="fs-4 italic">
-                          "Fermati quando hai finito."
-                        </p>
+                  {[
+                    { img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48", title: "Non fermarti quando sei stanco", sub: '"Fermati quando hai finito."' },
+                    { img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438", title: "La disciplina batte il talento", sub: '"Ogni allenamento è un passo verso la tua versione migliore."' },
+                    { img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b", title: "Il tuo unico limite sei tu", sub: '"Inizia dove sei. Usa quello che hai. Fai quello che puoi."' }
+                  ].map((item, index) => (
+                    <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={index} data-bs-interval="5000">
+                      <div className="position-relative">
+                        <img src={`${item.img}?q=80&w=1470&auto=format&fit=crop`} className="d-block w-100 carousel-img" alt={`Motivation ${index + 1}`} />
+                        <div className="carousel-caption d-md-block">
+                          <h2 className="display-5 fw-bold text-uppercase">{item.title}</h2>
+                          <p className="fs-4 italic-quote">{item.sub}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="carousel-item" data-bs-interval="5000">
-                    <div className="position-relative">
-                      <img
-                        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop"
-                        className="d-block w-100"
-                        alt="Motivation 2"
-                        style={{
-                          height: "450px",
-                          objectFit: "cover",
-                          filter: "brightness(0.6)",
-                        }}
-                      />
-                      <div className="carousel-caption d-md-block">
-                        <h2 className="display-5 fw-bold text-uppercase">
-                          La disciplina batte il talento
-                        </h2>
-                        <p className="fs-4">
-                          "Ogni allenamento è un passo verso la tua versione
-                          migliore."
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="carousel-item" data-bs-interval="5000">
-                    <div className="position-relative">
-                      <img
-                        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1470&auto=format&fit=crop"
-                        className="d-block w-100"
-                        alt="Motivation 3"
-                        style={{
-                          height: "450px",
-                          objectFit: "cover",
-                          filter: "brightness(0.6)",
-                        }}
-                      />
-                      <div className="carousel-caption d-md-block">
-                        <h2 className="display-5 fw-bold text-uppercase">
-                          Il tuo unico limite sei tu
-                        </h2>
-                        <p className="fs-4">
-                          "Inizia dove sei. Usa quello che hai. Fai quello che
-                          puoi."
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#motivationalCarousel"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
+                <button className="carousel-control-prev" type="button" data-bs-target="#motivationalCarousel" data-bs-slide="prev">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#motivationalCarousel"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
+                <button className="carousel-control-next" type="button" data-bs-target="#motivationalCarousel" data-bs-slide="next">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
               </div>
             </div>
@@ -321,16 +202,11 @@ function Home({ user, onLogout, setUser }) {
         </Row>
 
         <div className="text-center my-5 pb-5">
-          <Link
-            to="/training"
-            className="btn btn-primary btn-lg px-5 py-3 shadow fw-bold"
-            style={{ borderRadius: "50px" }}
-          >
+          <Link to="/training" className="btn btn-primary cta-home-btn">
             Inizia Allenamento Ora
           </Link>
         </div>
       </div>
-
       <Footer />
     </div>
   );

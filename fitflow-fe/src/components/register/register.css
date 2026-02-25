@@ -1,0 +1,15 @@
+.auth-card-wide {
+  max-width: 550px !important;
+  border-radius: 20px !important;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.btn-register {
+  border-radius: 12px !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}

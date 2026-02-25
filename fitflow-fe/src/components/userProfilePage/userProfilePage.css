@@ -1,79 +1,83 @@
 .user-profile-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f8f9fa;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #007bff;
+.bg-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
 }
 
-.profile-display p {
-  font-size: 1.1rem;
+.profile-avatar-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  background-color: white;
+  transition: transform 0.3s ease;
 }
 
-.profile-form input,
-.profile-form textarea {
-  border-radius: 5px;
+.profile-avatar-container img:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  border-radius: 15px !important;
+  border: none !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.bg-light.rounded.shadow-sm {
+  border: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.bg-light.rounded.shadow-sm:hover {
+  background-color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05) !important;
+}
+
+.form-control, .form-select {
+  border-radius: 8px !important;
+  padding: 0.75rem !important;
   border: 1px solid #ced4da;
+  font-size: 0.95rem;
 }
 
-.profile-form textarea {
-  min-height: 150px;
+.form-control:focus, .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.1);
+}
+
+.form-label {
+  color: #495057;
+  margin-bottom: 0.5rem;
 }
 
 .btn {
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  border-radius: 8px !important;
+  transition: all 0.3s ease;
 }
 
 .btn-primary {
   background-color: #007bff;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  border: none;
-}
-
-.btn-danger:hover {
-  background-color: #c82333;
 }
 
 .btn-success {
   background-color: #28a745;
-  border: none;
 }
 
-.btn-success:hover {
-  background-color: #218838;
+.alert-primary {
+  background-color: #e7f1ff;
+  border-left: 5px solid #007bff;
+  color: #084298;
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  border: none;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-.profile-form .mb-3 {
-  margin-bottom: 1.5rem;
-}
-
-.profile-form .form-label {
-  font-weight: 600;
-}
-
-.profile-form button {
-  min-width: 120px;
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
