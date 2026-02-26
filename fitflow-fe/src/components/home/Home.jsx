@@ -37,6 +37,7 @@ function Home({ user, onLogout, setUser }) {
       return { label: "Normopeso", color: "text-success", key: "normal" };
     if (bmiValue < 30)
       return { label: "Sovrappeso", color: "text-warning", key: "overweight" };
+    if (bmiValue > 30)
     return { label: "Obeso", color: "text-danger", key: "obese" };
   };
 

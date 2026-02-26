@@ -34,5 +34,17 @@
       "Includere più fibre nella dieta, come verdure e legumi",
       "Bevi molta acqua e riduci l'assunzione di alcol"
     ]
+  },
+  "obese": {
+    "exercises": [
+      "Attività a basso impatto (nuoto, cyclette o camminata) 30-40 minuti",
+      "Esercizi di mobilità e rinforzo muscolare leggero 2 volte a settimana",
+      "Monitoraggio costante del battito cardiaco e delle articolazioni"
+    ],
+    "nutrition": [
+      "Priorità a proteine magre e verdure ad alto volume per massimizzare la sazietà",
+      "Sostituzione dei carboidrati raffinati con opzioni integrali a basso indice glicemico",
+      "Eliminazione totale di bevande zuccherate e riduzione drastica dei cibi ultra-processati"
+    ]
   }
 }
