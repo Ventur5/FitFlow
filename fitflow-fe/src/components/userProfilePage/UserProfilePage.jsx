@@ -211,6 +211,7 @@ const UserProfilePage = ({ user, onLogout, setUser }) => {
                         <option value="Vegetariana">Vegetariana</option>
                         <option value="Vegana">Vegana</option>
                         <option value="Chetogenica">Chetogenica</option>
+                        
                       </Form.Select>
                     </Form.Group>
 

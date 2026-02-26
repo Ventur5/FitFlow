@@ -199,6 +199,7 @@ function Register({ setUser }) {
                   <option value="Normale">Normale</option>
                   <option value="Vegetariana">Vegetariana</option>
                   <option value="Vegana">Vegana</option>
+                  <option value="Chetogenica">Chetogenica</option>
                 </Form.Select>
               </Col>
               <Col>
@@ -214,6 +215,7 @@ function Register({ setUser }) {
                   <option value="Perdita peso">Perdita peso</option>
                   <option value="Mantenimento">Mantenimento</option>
                   <option value="Aumento massa">Aumento massa</option>
+                  <option value="Definizione">Definizione</option>
                 </Form.Select>
               </Col>
             </Row>
