@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { FaUserCircle, FaSignOutAlt, FaUser, FaBars, FaTimes, FaBolt } from "react-icons/fa";
-import "./Navbar.css";
+import "./navbar.css";
 
 function MyNavbar({ user, onLogout }) {
   const [expanded, setExpanded] = useState(false);

@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebookF, FaXTwitter, FaInstagram } from "react-icons/fa6";
-import "./Footer.css";
+import "./footer.css";
 
 function Footer() {
   const currentYear = new Date().getFullYear();

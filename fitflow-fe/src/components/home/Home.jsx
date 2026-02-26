@@ -4,7 +4,7 @@ import Footer from "../layout/Footer";
 import TrainerList from "../layout/TrainerList";
 import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./Home.css";
+import "./home.css";
 
 function Home({ user, onLogout, setUser }) {
   const [isWelcomeVisible, setIsWelcomeVisible] = useState(false);
