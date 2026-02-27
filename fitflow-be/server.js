@@ -28,12 +28,13 @@ app.use(morgan("dev"));
 
 const allowedOrigins = [
   'http://localhost:5173', 
-  'https://fit-flow-be.vercel.app'
+  'https://fit-flow-be.vercel.app',
+  /\.vercel\.app$/
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
       callback(null, true);
     } else {
       callback(new Error('Non consentito dai CORS'));
