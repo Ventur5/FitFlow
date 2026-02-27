@@ -1,13 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const passport = require("passport");
 const session = require("express-session");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 
-const connectDB = require("./config/db");
-require("./config/passport.js");
+require("./config/passport.js"); 
 
 const authRoutes = require("./modules/auth/auth.routes"); 
 const exercizeRoutes = require("./modules/exercize/exercize.routes");
@@ -34,11 +33,10 @@ app.use((req, res, next) => {
 
 app.set('trust proxy', 1);
 
-const mongoose = require("mongoose");
 const startDB = async () => {
   try {
     const dbURI = process.env.MONGO_CONNECTION_STRING || process.env.MONGODB_URI;
-    if (!dbURI) throw new Error("Manca la stringa di connessione al database!");
+    if (!dbURI) throw new Error("Manca la stringa di connessione!");
     await mongoose.connect(dbURI);
     console.log("✅ MongoDB Connesso");
   } catch (err) {
