@@ -18,13 +18,14 @@ function Register({ setUser }) {
   });
 
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "${import.meta.env.VITE_API_URL}/api/auth/google";
+    window.location.href = `${API_URL}/api/auth/google`;
   };
 
   const handleSubmit = async (e) => {
@@ -36,9 +37,10 @@ function Register({ setUser }) {
     }
 
     try {
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/users/register", {
+      const res = await fetch(`${API_URL}/api/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", 
         body: JSON.stringify({
           ...form,
           height: Number(form.height),
