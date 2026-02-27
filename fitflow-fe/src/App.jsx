@@ -12,7 +12,6 @@ const ProtectedRoute = ({ user, children, forceProfileUpdate = true }) => {
   if (!user) return <Navigate to="/login" replace />;
 
   if (forceProfileUpdate && (user.height === 0 || user.weight === 0)) {
-   
     if (window.location.pathname !== "/profile") {
       return <Navigate to="/profile" replace />;
     }
@@ -25,6 +24,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -41,12 +42,22 @@ function App() {
 
     const fetchUser = async () => {
       try {
-        const res = await fetch("${import.meta.env.VITE_API_URL}/api/users/me", {
+        const res = await fetch(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
+          credentials: "include"
         });
+
+        if (!res.ok) {
+          throw new Error("Sessione non valida");
+        }
+
         const data = await res.json();
-        if (res.ok && (data._id || data.id)) setUser(data);
-        else localStorage.removeItem("token");
+        
+        if (data._id || data.id) {
+          setUser(data);
+        } else {
+          localStorage.removeItem("token");
+        }
       } catch (err) {
         console.error("Errore fetch /me:", err);
         localStorage.removeItem("token");
@@ -55,7 +66,7 @@ function App() {
       }
     };
     fetchUser();
-  }, []);
+  }, [API_URL]);
 
   if (loading) return <p className="text-center mt-5">Caricamento...</p>;
 
