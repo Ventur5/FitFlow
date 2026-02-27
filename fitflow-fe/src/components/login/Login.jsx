@@ -11,6 +11,8 @@ function Login({ setUser }) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
@@ -18,8 +20,9 @@ function Login({ setUser }) {
     if (token) {
       localStorage.setItem("token", token);
       
-      fetch("http://localhost:5000/api/users/me", {
-        headers: { "Authorization": `Bearer ${token}` }
+      fetch(`${API_URL}/api/users/me`, {
+        headers: { "Authorization": `Bearer ${token}` },
+        credentials: "include"
       })
       .then(res => res.json())
       .then(data => {
@@ -29,15 +32,16 @@ function Login({ setUser }) {
       })
       .catch(() => toast.error("Errore nel recupero dati utente"));
     }
-  }, [location, setUser, navigate]);
+  }, [location, setUser, navigate, API_URL]);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
+      const res = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
@@ -57,7 +61,7 @@ function Login({ setUser }) {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = `${API_URL}/api/auth/google`;
   };
 
   return (
@@ -72,7 +76,6 @@ function Login({ setUser }) {
         </div>
 
         <Form onSubmit={handleSubmit}>
-          {/* EMAIL */}
           <Form.Group className="mb-3">
             <Form.Label className="small fw-bold text-secondary">
               Email
@@ -87,7 +90,6 @@ function Login({ setUser }) {
             />
           </Form.Group>
 
-          {/* PASSWORD */}
           <Form.Group className="mb-4">
             <Form.Label className="small fw-bold text-secondary">
               Password
@@ -118,15 +120,16 @@ function Login({ setUser }) {
           </div>
 
           <Button
-            type="submit"
+            type="button"
             variant="outline-dark"
             className="w-100 py-2 d-flex align-items-center justify-content-center shadow-sm border-1 btn-google"
-            onClick={(e) => { e.preventDefault(); handleGoogleLogin(); }}
+            onClick={handleGoogleLogin}
           >
             <img 
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7AvKmIcAF9QUdS96opCZooZxVua16crDwkg&s" 
               alt="Google" 
               className="google-icon"
+              style={{ width: '20px', marginRight: '10px' }}
             />
             Continua con Google
           </Button>
