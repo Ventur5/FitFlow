@@ -28,7 +28,7 @@ app.use(morgan("dev"));
 
 const allowedOrigins = [
   'http://localhost:5173', 
-  'https://fit-flow-chi.vercel.app'
+  'https://fit-flow-be.vercel.app'
 ];
 
 app.use(cors({
