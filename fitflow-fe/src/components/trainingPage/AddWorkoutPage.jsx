@@ -25,6 +25,8 @@ const AddWorkoutPage = ({ user, onLogout }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -35,12 +37,14 @@ const AddWorkoutPage = ({ user, onLogout }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("${import.meta.env.VITE_API_URL}/api/workouts/add", {
+      
+      const res = await fetch(`${API_URL}/api/workouts/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        credentials: "include", 
         body: JSON.stringify(formData),
       });
 
