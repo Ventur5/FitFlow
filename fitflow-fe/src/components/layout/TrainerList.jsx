@@ -14,7 +14,7 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
   const handleClose = () => setShow(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/trainers")
+    fetch("${import.meta.env.VITE_API_URL}/api/trainers")
       .then((res) => res.json())
       .then((data) => {
         setTrainers(data);
@@ -30,7 +30,7 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
     if (!currentUser) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/choose-trainer", {
+      const response = await fetch("${import.meta.env.VITE_API_URL}/api/users/choose-trainer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

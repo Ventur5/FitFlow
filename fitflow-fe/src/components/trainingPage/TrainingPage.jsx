@@ -22,7 +22,7 @@ const TrainingPage = ({ user, onLogout }) => {
     try {
       setLoading(true);
       const res = await fetch(
-        `http://localhost:5000/api/workouts/user/${user._id || user.id}`,
+        `${import.meta.env.VITE_API_URL}/api/workouts/user/${user._id || user.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -103,7 +103,7 @@ const TrainingPage = ({ user, onLogout }) => {
                           )
                         ) {
                           fetch(
-                            `http://localhost:5000/api/workouts/${workout._id || workout.id}`,
+                            `${import.meta.env.VITE_API_URL}/api/workouts/${workout._id || workout.id}`,
                             {
                               method: "DELETE",
                               headers: { Authorization: `Bearer ${token}` },

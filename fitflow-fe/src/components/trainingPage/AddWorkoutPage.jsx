@@ -35,7 +35,7 @@ const AddWorkoutPage = ({ user, onLogout }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/workouts/add", {
+      const res = await fetch("${import.meta.env.VITE_API_URL}/api/workouts/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

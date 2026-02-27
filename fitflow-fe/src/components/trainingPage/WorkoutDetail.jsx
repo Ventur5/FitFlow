@@ -102,7 +102,7 @@ const WorkoutDetail = ({ user, onLogout }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -145,7 +145,7 @@ const WorkoutDetail = ({ user, onLogout }) => {
   const saveWorkout = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const WorkoutDetail = ({ user, onLogout }) => {
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/workouts/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
