@@ -23,24 +23,31 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false, 
+}));
+
 app.use(morgan("dev"));
 
 const allowedOrigins = [
   'http://localhost:5173', 
   'https://fit-flow-be.vercel.app',
-  /\.vercel\.app$/
+  /\.vercel\.app$/ 
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
+    if (!origin || allowedOrigins.some(o => o instanceof RegExp ? o.test(origin) : o === origin)) {
       callback(null, true);
     } else {
+      console.error("CORS bloccato per origine:", origin);
       callback(new Error('Non consentito dai CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
@@ -79,6 +86,5 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => console.log(`✅ Server in esecuzione sulla porta ${PORT}`));
 }
-
 
 module.exports = app;
