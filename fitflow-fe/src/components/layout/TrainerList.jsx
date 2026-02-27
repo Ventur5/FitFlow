@@ -10,11 +10,15 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
   const [showToast, setShowToast] = useState(false);
   const [selectedTrainerName, setSelectedTrainerName] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const toggleSidebar = () => setShow(!show);
   const handleClose = () => setShow(false);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainers")
+    fetch(`${API_URL}/api/trainers`, {
+      credentials: "include"
+    })
       .then((res) => res.json())
       .then((data) => {
         setTrainers(data);
@@ -24,15 +28,20 @@ const TrainerList = ({ currentUser, onTrainerUpdated }) => {
         console.error("Errore caricamento:", err);
         setLoading(false);
       });
-  }, []);
+  }, [API_URL]);
 
   const handleSelect = async (trainer) => {
     if (!currentUser) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/choose-trainer", {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_URL}/api/users/choose-trainer`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        credentials: "include",
         body: JSON.stringify({
           userId: currentUser?.id || currentUser?._id,
           trainerId: trainer._id,
