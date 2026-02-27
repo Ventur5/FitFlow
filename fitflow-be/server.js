@@ -33,15 +33,19 @@ app.use(morgan("dev"));
 const allowedOrigins = [
   'http://localhost:5173', 
   'https://fit-flow-be.vercel.app',
-  /\.vercel\.app$/ 
+  'https://fit-flow-fe.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.some(o => o instanceof RegExp ? o.test(origin) : o === origin)) {
+    if (!origin) return callback(null, true);
+    
+    const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app');
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
-      console.error("CORS bloccato per origine:", origin);
+      console.error("CORS bloccato per:", origin);
       callback(new Error('Non consentito dai CORS'));
     }
   },
