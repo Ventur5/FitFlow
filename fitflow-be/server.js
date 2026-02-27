@@ -16,19 +16,8 @@ const workoutRoutes = require("./modules/workout/workout.routes");
 const trainerRoutes = require("./modules/trainer/trainer.routes");
 
 const app = express();
-connectDB();
 
-app.use((req, res, next) => {
-  console.log(`Richiesta in arrivo: ${req.method} ${req.url}`);
-  next();
-});
-
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-  contentSecurityPolicy: false, 
-}));
-
-app.use(morgan("dev"));
+app.set('trust proxy', 1);
 
 const allowedOrigins = [
   'http://localhost:5173', 
@@ -45,7 +34,7 @@ app.use(cors({
     if (isAllowed) {
       callback(null, true);
     } else {
-      console.error("CORS bloccato per:", origin);
+      console.log("CORS bloccato per:", origin);
       callback(new Error('Non consentito dai CORS'));
     }
   },
@@ -54,9 +43,17 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(express.json());
+app.options('*', cors());
 
-app.set('trust proxy', 1);
+connectDB();
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false, 
+}));
+
+app.use(morgan("dev"));
+app.use(express.json());
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fitflow_secret', 
