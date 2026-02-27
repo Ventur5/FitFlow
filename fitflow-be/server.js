@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 const connectDB = require("./config/db");
-require("./config/passport");
+require("./config/passport.js");
 
 const authRoutes = require("./modules/auth/auth.routes"); 
 const exercizeRoutes = require("./modules/exercize/exercize.routes");
@@ -19,11 +19,9 @@ const app = express();
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-
   if (origin && (origin.endsWith('.vercel.app') || origin === 'http://localhost:5173')) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -36,33 +34,18 @@ app.use((req, res, next) => {
 
 app.set('trust proxy', 1);
 
-const allowedOrigins = [
-  'http://localhost:5173', 
-  'https://fit-flow-be.vercel.app',
-  'https://fit-flow-fe.vercel.app'
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    
-    const isAllowed = allowedOrigins.includes(origin) || origin.endsWith('.vercel.app');
-    
-    if (isAllowed) {
-      callback(null, true);
-    } else {
-      console.log("CORS bloccato per:", origin);
-      callback(new Error('Non consentito dai CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.options('*', cors());
-
-connectDB();
+const mongoose = require("mongoose");
+const startDB = async () => {
+  try {
+    const dbURI = process.env.MONGO_CONNECTION_STRING || process.env.MONGODB_URI;
+    if (!dbURI) throw new Error("Manca la stringa di connessione al database!");
+    await mongoose.connect(dbURI);
+    console.log("✅ MongoDB Connesso");
+  } catch (err) {
+    console.error("❌ Errore DB:", err.message);
+  }
+};
+startDB();
 
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
@@ -100,7 +83,6 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => console.log(`✅ Server in esecuzione sulla porta ${PORT}`));
 }

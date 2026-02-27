@@ -1,6 +1,7 @@
 {
   "name": "fitflow-be",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "backend for fitflow-fe",
   "main": "server.js",
   "scripts": {
