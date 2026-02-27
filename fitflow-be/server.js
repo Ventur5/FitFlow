@@ -17,6 +17,23 @@ const trainerRoutes = require("./modules/trainer/trainer.routes");
 
 const app = express();
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const isVercel = origin && (origin.endsWith('.vercel.app') || origin === 'https://fit-flow-fe.vercel.app');
+  
+  if (isVercel) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
